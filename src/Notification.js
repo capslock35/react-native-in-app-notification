@@ -25,17 +25,19 @@ class Notification extends Component {
     this.state = {
       animatedValue: new Animated.Value(0),
       isOpen: false,
-      backgroundColor:'transparent'
+      backgroundColor:'transparent',
+      titleColor:'black',
+      messageColor:'black'
     };
   }
 
   show(
-    { title, message, onPress, icon, vibrate, backgroundColor } = {
+    { title, message, onPress, icon, vibrate, backgroundColor, titleColor, messageColor } = {
       title: '',
       message: '',
       onPress: null,
       icon: null,
-      vibrate: true,
+      vibrate: true
     },
   ) {
 
@@ -55,7 +57,9 @@ class Notification extends Component {
           onPress,
           icon,
           vibrate,
-          backgroundColor
+          backgroundColor,
+          titleColor,
+          messageColor
         },
         () => this.showNotification(() => {
           this.currentNotificationInterval = setTimeout(() => {
@@ -105,10 +109,10 @@ class Notification extends Component {
       topOffset,
       backgroundColour,
       iconApp,
-      notificationBodyComponent: NotificationBody,
+      notificationBodyComponent: NotificationBody
     } = this.props;
 
-    const { animatedValue, title, message, onPress, isOpen, icon, vibrate, backgroundColor } = this.state;
+    const { animatedValue, title, message, onPress, isOpen, icon, vibrate, backgroundColor, titleColor, messageColor } = this.state;
 
     const height = baseHeight + this.heightOffset;
 
@@ -138,6 +142,8 @@ class Notification extends Component {
           icon={icon}
           vibrate={vibrate}
           backgroundColor={backgroundColor}
+          titleColor={titleColor}
+          messageColor={messageColor}
           onClose={() => this.setState({ isOpen: false }, this.closeNotification)}
         />
       </Animated.View>
