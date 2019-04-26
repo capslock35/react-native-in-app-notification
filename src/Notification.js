@@ -27,12 +27,13 @@ class Notification extends Component {
       isOpen: false,
       backgroundColor:'transparent',
       titleColor:'black',
-      messageColor:'black'
+      messageColor:'black',
+      borderColor:'black'
     };
   }
 
   show(
-    { title, message, onPress, icon, vibrate, backgroundColor, titleColor, messageColor } = {
+    { title, message, onPress, icon, vibrate, backgroundColor, titleColor, messageColor, borderColor } = {
       title: '',
       message: '',
       onPress: null,
@@ -59,7 +60,8 @@ class Notification extends Component {
           vibrate,
           backgroundColor,
           titleColor,
-          messageColor
+          messageColor,
+          borderColor
         },
         () => this.showNotification(() => {
           this.currentNotificationInterval = setTimeout(() => {
@@ -71,7 +73,10 @@ class Notification extends Component {
                 onPress: null,
                 icon: null,
                 vibrate: true,
-                backgroundColor:'transparent'
+                backgroundColor:'transparent',
+                titleColor:'black',
+                messageColor:'black',
+                borderColor:'black'
               },
               this.closeNotification,
             );
@@ -112,7 +117,7 @@ class Notification extends Component {
       notificationBodyComponent: NotificationBody
     } = this.props;
 
-    const { animatedValue, title, message, onPress, isOpen, icon, vibrate, backgroundColor, titleColor, messageColor } = this.state;
+    const { animatedValue, title, message, onPress, isOpen, icon, vibrate, backgroundColor, titleColor, messageColor, borderColor } = this.state;
 
     const height = baseHeight + this.heightOffset;
 
@@ -144,6 +149,7 @@ class Notification extends Component {
           backgroundColor={backgroundColor}
           titleColor={titleColor}
           messageColor={messageColor}
+          borderColor={borderColor}
           onClose={() => this.setState({ isOpen: false }, this.closeNotification)}
         />
       </Animated.View>
