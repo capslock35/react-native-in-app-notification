@@ -25,18 +25,23 @@ class Notification extends Component {
     this.state = {
       animatedValue: new Animated.Value(0),
       isOpen: false,
+      backgroundColor:'transparent',
+      titleColor:'black',
+      messageColor:'black',
+      borderColor:'black'
     };
   }
 
   show(
-    { title, message, onPress, icon, vibrate } = {
+    { title, message, onPress, icon, vibrate, backgroundColor, titleColor, messageColor, borderColor, iconName } = {
       title: '',
       message: '',
       onPress: null,
       icon: null,
-      vibrate: true,
+      vibrate: true
     },
   ) {
+
     const { closeInterval } = this.props;
     const { isOpen } = this.state;
 
@@ -53,6 +58,11 @@ class Notification extends Component {
           onPress,
           icon,
           vibrate,
+          backgroundColor,
+          titleColor,
+          messageColor,
+          borderColor,
+          iconName
         },
         () => this.showNotification(() => {
           this.currentNotificationInterval = setTimeout(() => {
@@ -64,6 +74,11 @@ class Notification extends Component {
                 onPress: null,
                 icon: null,
                 vibrate: true,
+                backgroundColor:'transparent',
+                titleColor:'black',
+                messageColor:'black',
+                borderColor:'black',
+                iconName:null
               },
               this.closeNotification,
             );
@@ -95,16 +110,19 @@ class Notification extends Component {
     }).start(done);
   }
 
+  _onClose = () => this.setState({ isOpen: false }, this.closeNotification);
+
   render() {
     const {
       height: baseHeight,
       topOffset,
       backgroundColour,
       iconApp,
-      notificationBodyComponent: NotificationBody,
+      notificationBodyComponent: NotificationBody
     } = this.props;
 
-    const { animatedValue, title, message, onPress, isOpen, icon, vibrate } = this.state;
+    const { animatedValue, title, message, onPress, isOpen, icon, vibrate,
+      backgroundColor, titleColor, messageColor, borderColor, iconName } = this.state;
 
     const height = baseHeight + this.heightOffset;
 
@@ -133,7 +151,12 @@ class Notification extends Component {
           iconApp={iconApp}
           icon={icon}
           vibrate={vibrate}
-          onClose={() => this.setState({ isOpen: false }, this.closeNotification)}
+          backgroundColor={backgroundColor}
+          titleColor={titleColor}
+          messageColor={messageColor}
+          borderColor={borderColor}
+          iconName={iconName}
+          onClose={this._onClose}
         />
       </Animated.View>
     );
