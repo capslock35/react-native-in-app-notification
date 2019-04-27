@@ -33,7 +33,7 @@ class Notification extends Component {
   }
 
   show(
-    { title, message, onPress, icon, vibrate, backgroundColor, titleColor, messageColor, borderColor } = {
+    { title, message, onPress, icon, vibrate, backgroundColor, titleColor, messageColor, borderColor, iconName } = {
       title: '',
       message: '',
       onPress: null,
@@ -61,7 +61,8 @@ class Notification extends Component {
           backgroundColor,
           titleColor,
           messageColor,
-          borderColor
+          borderColor,
+          iconName
         },
         () => this.showNotification(() => {
           this.currentNotificationInterval = setTimeout(() => {
@@ -76,7 +77,8 @@ class Notification extends Component {
                 backgroundColor:'transparent',
                 titleColor:'black',
                 messageColor:'black',
-                borderColor:'black'
+                borderColor:'black',
+                iconName:null
               },
               this.closeNotification,
             );
@@ -108,6 +110,8 @@ class Notification extends Component {
     }).start(done);
   }
 
+  _onClose = () => this.setState({ isOpen: false }, this.closeNotification);
+
   render() {
     const {
       height: baseHeight,
@@ -117,7 +121,8 @@ class Notification extends Component {
       notificationBodyComponent: NotificationBody
     } = this.props;
 
-    const { animatedValue, title, message, onPress, isOpen, icon, vibrate, backgroundColor, titleColor, messageColor, borderColor } = this.state;
+    const { animatedValue, title, message, onPress, isOpen, icon, vibrate,
+      backgroundColor, titleColor, messageColor, borderColor, iconName } = this.state;
 
     const height = baseHeight + this.heightOffset;
 
@@ -150,7 +155,8 @@ class Notification extends Component {
           titleColor={titleColor}
           messageColor={messageColor}
           borderColor={borderColor}
-          onClose={() => this.setState({ isOpen: false }, this.closeNotification)}
+          iconName={iconName}
+          onClose={this._onClose}
         />
       </Animated.View>
     );
